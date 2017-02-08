@@ -78,7 +78,7 @@ function draw() {
   }
 }
 
-function mouseClicked() {
+function mouseMoved() {
   if (mouseX > 0 && mouseX < CONF.WIDTH && mouseY > 0 && mouseY < CONF.HEIGHT) {
     let w = CONF.WIDTH / CONF.WORLD.WIDTH,
         h = CONF.HEIGHT / CONF.WORLD.HEIGHT,
@@ -86,6 +86,16 @@ function mouseClicked() {
         y = Math.floor(mouseY / h),
         tile = tiles[x][y];
     inspector.html("["+x+","+y+"] TILE: " + tile.describe());
+  }
+}
+
+function mouseClicked() {
+  if (mouseX > 0 && mouseX < CONF.WIDTH && mouseY > 0 && mouseY < CONF.HEIGHT) {
+    let w = CONF.WIDTH / CONF.WORLD.WIDTH,
+        h = CONF.HEIGHT / CONF.WORLD.HEIGHT,
+        x = Math.floor(mouseX / w),
+        y = Math.floor(mouseY / h),
+        tile = tiles[x][y];
     if (tile.stage == STAGES.MATURE){
       console.log("WIN");
       tile.harvest();
