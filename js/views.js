@@ -1,15 +1,14 @@
-var 
+var
     COLORS = {
         RED: [250, 40, 40],
         HEAD: [100, 250, 100],
         TAIL: [50, 180, 50]
     },
-    slot = new Slot(),
     Views = {
       play: function() {
         for (var x = 0; x < tiles.length; x++) {
             for (var y = 0; y < tiles[x].length; y++) {
-                slot.render_tile(tiles[x][y]);
+                tiles[x][y].render();
             }
         }
         this.music();
