@@ -1,7 +1,7 @@
 const CONF = {
-        WIDTH: 400, HEIGHT: 400,
+        WIDTH: 700, HEIGHT: 500,
         WORLD: {
-          WIDTH: 5, HEIGHT: 5,
+          WIDTH: 7, HEIGHT: 5,
         },
         TRACTOR: {
           SPEED: 90
