@@ -46,11 +46,9 @@ const NAMES = {
   }
 }
 
-
 function Tile(pos)
 {
 	this.pos = pos; // Vector
-  // this.type = TILE_TYPES.FARM;
   this.type = Math.round(random(1, 6));
   if (this.type == TILE_TYPES.FARM) {
     this.seed = Math.round(random(1, 4));
@@ -60,7 +58,6 @@ function Tile(pos)
   }
   this.age = 0.0;
   this.stage = 1;
-
 }
 
 Tile.prototype.tick = function() {
@@ -115,20 +112,8 @@ Tile.prototype.plant = function(seed) {
 
 Tile.prototype.render = function() {
   push();
-  // stroke(200, 20);
   noStroke();
 
-
-  const COLORS = {
-    1: color(200, 200, 50),
-    2: color(130, 62, 17),
-    3: color(200, 50, 50),
-    4: color(50, 200, 250),
-    5: color(0, 0, 200),
-    6: color(20, 20, 20)
-  };
-
-  fill(COLORS[this.type]);
 
   if (this.type == TILE_TYPES.FARM) {
     const COLORS = {
@@ -138,9 +123,18 @@ Tile.prototype.render = function() {
       4: color(156, 117, 78),
     }
     fill(COLORS[this.seed]);
+  } else {
+    const COLORS = {
+      1: color(200, 200, 50),
+      2: color(130, 62, 17),
+      3: color(200, 50, 50),
+      4: color(50, 200, 250),
+      5: color(0, 0, 200),
+      6: color(20, 20, 20)
+    };
+    fill(COLORS[this.type]);
   }
 
-  // fill(this.color, this.color, this.color);
   let w = CONF.WIDTH / CONF.WORLD.WIDTH,
     h = CONF.HEIGHT / CONF.WORLD.HEIGHT,
     x = this.pos.x * w,
