@@ -119,18 +119,18 @@ Tile.prototype.render = function() {
     const COLORS = {
       1: color(200, 200, 50),
       2: color(164, 207, 56),
-      3: color(200, 50, 50),
+      3: color(150, 156, 95),
       4: color(156, 117, 78),
     }
     fill(COLORS[this.seed]);
   } else {
     const COLORS = {
-      1: color(200, 200, 50),
+      1: color(161, 212, 144),
       2: color(130, 62, 17),
-      3: color(200, 50, 50),
+      3: color(212, 161, 144),
       4: color(50, 200, 250),
       5: color(0, 0, 200),
-      6: color(20, 20, 20)
+      6: color(50, 50, 50)
     };
     fill(COLORS[this.type]);
   }
