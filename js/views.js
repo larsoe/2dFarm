@@ -1,9 +1,4 @@
 var
-    COLORS = {
-        RED: [250, 40, 40],
-        HEAD: [100, 250, 100],
-        TAIL: [50, 180, 50]
-    },
     Views = {
       play: function() {
         for (var x = 0; x < tiles.length; x++) {

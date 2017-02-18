@@ -22,7 +22,7 @@ Tractor.prototype.tick = function() {
 
     // If we are at a chosen position, we can do some work
     let tile = tiles[this.pos.x][this.pos.y];
-    if (tile.type == TILE_TYPES.DIRT) {
+    if (tile.type == TILES.DIRT) {
       tile.plow();
     }
 

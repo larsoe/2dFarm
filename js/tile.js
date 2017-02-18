@@ -1,10 +1,10 @@
-const TILE_TYPES = {
-    GRASS: 1,
-    DIRT: 2,
-    PLOWED: 3,
-    FARM: 4,
-    WATER: 5,
-    ROCK: 6
+const TILES = {
+    WATER: 1,
+    ROCK: 2,
+    GRASS: 3,
+    DIRT: 4,
+    PLOWED: 5,
+    FARM: 6
   },
   PLANTS = {
     WHEAT: 1,
@@ -21,38 +21,50 @@ const TILE_TYPES = {
     ROTTEN: 6
   }
 
-const NAMES = {
-  PLANTS: {
-    1: "wheat",
-    2: "melon",
-    3: "rhye",
-    4: "corn"
-  },
-  TILES: {
-    1: 'grass',
-    2: 'dirt',
-    3: 'plowed',
-    4: 'farm',
-    5: 'water',
-    6: 'rock'
-  },
-  STAGES: {
-    1: 'sown',
-    2: 'young',
-    3: 'adult',
-    4: 'mature',
-    5: 'old',
-    6: 'rotten'
-  }
-}
+const COLORS = { TILES: {}, PLANTS: {} },
+      NAMES = { TILES: {}, PLANTS: {}, STAGES: {}};
+
+COLORS.PLANTS[PLANTS.WHEAT] = [200, 200, 50];
+COLORS.PLANTS[PLANTS.MELON] = [164, 207, 56];
+COLORS.PLANTS[PLANTS.RHYE] = [150, 156, 95];
+COLORS.PLANTS[PLANTS.CORN] = [156, 117, 78];
+COLORS.TILES[TILES.ROCK] = [50, 50, 50];
+COLORS.TILES[TILES.WATER] = [0, 0, 200];
+COLORS.TILES[TILES.GRASS] = [161, 212, 144];
+COLORS.TILES[TILES.DIRT] = [130, 62, 17];
+COLORS.TILES[TILES.PLOWED] = [212, 161, 144];
+COLORS.TILES[TILES.FARM] = [50, 200, 250];
+
+NAMES.PLANTS[PLANTS.WHEAT] = "wheat";
+NAMES.PLANTS[PLANTS.MELON] = "melon";
+NAMES.PLANTS[PLANTS.RHYE] = "rhye";
+NAMES.PLANTS[PLANTS.CORN] = "corn";
+NAMES.TILES[TILES.WATER] = 'water';
+NAMES.TILES[TILES.ROCK] = 'rock';
+NAMES.TILES[TILES.GRASS] = 'grass';
+NAMES.TILES[TILES.DIRT] = 'dirt';
+NAMES.TILES[TILES.PLOWED] = 'plowed';
+NAMES.TILES[TILES.FARM] = 'farm';
+NAMES.STAGES[STAGES.SOWN] = 'sown';
+NAMES.STAGES[STAGES.YOUNG] = 'young';
+NAMES.STAGES[STAGES.ADULT] = 'adult';
+NAMES.STAGES[STAGES.MATURE] = 'mature';
+NAMES.STAGES[STAGES.OLD] = 'old';
+NAMES.STAGES[STAGES.ROTTEN] = 'rotten';
 
 function Tile(pos)
 {
 	this.pos = pos; // Vector
-  this.type = Math.round(random(1, 6));
-  if (this.type == TILE_TYPES.FARM) {
+  this.type = TILES.DIRT;
+  const r = random(100);
+  if ( r < 5) {
+    this.type = TILES.ROCK;
+  } else if ( r < 15) {
+    this.type = TILES.WATER;
+  }
+  if (this.type == TILES.FARM) {
     this.seed = Math.round(random(1, 4));
-    this.growth_rate = 0.05;
+    this.growth_rate = 0.03;
   } else {
     this.growth_rate = 0;
   }
@@ -62,7 +74,7 @@ function Tile(pos)
 
 Tile.prototype.tick = function() {
     this.age += this.growth_rate;
-    if (this.age > 10) {
+    if (this.age > 15) {
       this.stage += 1;
       this.age = 0.0
     }
@@ -76,12 +88,12 @@ Tile.prototype.reset = function() {
   this.seed = null;
   this.stage = 0;
   this.growth_rate = 0;
-  this.type = TILE_TYPES.DIRT;
+  this.type = TILES.DIRT;
 }
 
 Tile.prototype.describe = function() {
   let out = NAMES.TILES[this.type];
-  if (this.type == TILE_TYPES.FARM) {
+  if (this.type == TILES.FARM) {
     out += " : " + NAMES.STAGES[this.stage] + "\n" +
        NAMES.PLANTS[this.seed];
   }
@@ -95,45 +107,31 @@ Tile.prototype.harvest = function() {
 
 Tile.prototype.plow = function() {
   // Check for dirt?
-  this.type = TILE_TYPES.PLOWED;
+  this.type = TILES.PLOWED;
 }
 
 Tile.prototype.plant = function(seed) {
-  if (this.type != TILE_TYPES.PLOWED) {
+  if (this.type != TILES.PLOWED) {
     return false;
   }
-  this.type = TILE_TYPES.FARM;
+  this.type = TILES.FARM;
   this.seed = seed;
   this.stage = 1;
-  this.growth_rate = 0.05; // DEFAULT FOR SEED TYPE
+  this.growth_rate = 0.03; // DEFAULT FOR SEED TYPE
 
   return true;
 }
 
 Tile.prototype.render = function() {
   push();
-  noStroke();
-
-
-  if (this.type == TILE_TYPES.FARM) {
-    const COLORS = {
-      1: color(200, 200, 50),
-      2: color(164, 207, 56),
-      3: color(150, 156, 95),
-      4: color(156, 117, 78),
-    }
-    fill(COLORS[this.seed]);
+  if (this.type == TILES.FARM) {
+    const c = COLORS.PLANTS[this.seed];
+    fill(color(c[0], c[1], c[2]));
   } else {
-    const COLORS = {
-      1: color(161, 212, 144),
-      2: color(130, 62, 17),
-      3: color(212, 161, 144),
-      4: color(50, 200, 250),
-      5: color(0, 0, 200),
-      6: color(50, 50, 50)
-    };
-    fill(COLORS[this.type]);
+    const c = COLORS.TILES[this.type];
+    fill(color(c[0], c[1], c[2]));
   }
+  noStroke();
 
   let w = CONF.WIDTH / CONF.WORLD.WIDTH,
     h = CONF.HEIGHT / CONF.WORLD.HEIGHT,
@@ -147,16 +145,15 @@ Tile.prototype.render = function() {
   textAlign(CENTER);
 
   let tekst = NAMES.TILES[this.type];
-  if (this.type == TILE_TYPES.ROCK || this.type == TILE_TYPES.WATER){
+  if (this.type == TILES.ROCK || this.type == TILES.WATER){
     fill(240);
   }
-  if (this.type == TILE_TYPES.FARM) {
+  if (this.type == TILES.FARM) {
     tekst = tekst + "\n" + NAMES.STAGES[this.stage] +
     "\n" + NAMES.PLANTS[this.seed];
 
   }
   text(tekst, x + (w/2), y + 10);
-  fill(5);
 
   pop();
 }
