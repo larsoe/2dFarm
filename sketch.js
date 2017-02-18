@@ -19,20 +19,20 @@ function setup() {
   // menu.add(new Item('<div style="width: 100%; height: 150px; background: blue;margin-bottom: 1em;"> </div>'));
   // menu.add(new Button("Win", function() {console.log("WIN!");}));
   menu2 = new Panel("Side Menu", "actions");
-  menu2.add(new Image("tractor.jpg", function() {console.log("Du vil ha Traktor?!");}));
-  menu2.add(new Image("corn.png", function() {
+  menu2.add(new Image("img/tractor.jpg", function() {console.log("Du vil ha Traktor?!");}));
+  menu2.add(new Image("img/corn.png", function() {
     plantPick = PLANTS.CORN;
     console.log("Du vil ha corn?!");}));
-  menu2.add(new Image("wheat.png", function() {
+  menu2.add(new Image("img/wheat.png", function() {
     plantPick = PLANTS.WHEAT;
     console.log("Du vil ha wheat?!");}));
-  menu2.add(new Image("rhye.png", function() {
+  menu2.add(new Image("img/rhye.png", function() {
     plantPick = PLANTS.RHYE;
     console.log("Du vil ha rhye?!");}));
-  menu2.add(new Image("melon.png", function() {
+  menu2.add(new Image("img/melon.png", function() {
     plantPick = PLANTS.MELON;
     console.log("Du vil ha melon?!");}));
-  menu2.add(new Image("barn.png", function() {
+  menu2.add(new Image("img/barn.png", function() {
     console.log(barn);}));
 
   barn[PLANTS.CORN]=0;
