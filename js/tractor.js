@@ -1,6 +1,6 @@
 function Tractor() {
   this.pos = createVector(1, 1); // starts out in the upper left corner
-  this.target = createVector(3, 3);
+  this.target = createVector(1, 1);
   const w = CONF.WIDTH / CONF.WORLD.WIDTH;
   this.cord = createVector(this.pos.x * w, this.pos.y * w);
   this.queue = [];
@@ -24,6 +24,12 @@ Tractor.prototype.tick = function() {
     let tile = tiles[this.pos.x][this.pos.y];
     if (tile.type == TILES.DIRT) {
       tile.plow();
+    } else if (tile.type == TILES.FARM) {
+      if (tile.stage == STAGES.MATURE) {
+        tile.harvest();
+      }
+    } else if (tile.type == TILES.PLOWED) {
+      tile.plant(plantPick);
     }
 
     if (this.queue.length > 0) {
@@ -46,11 +52,16 @@ Tractor.prototype.tick = function() {
 
 Tractor.prototype.render = function() {
   push();
-  stroke(237, 50, 75);
-  fill(145, 31, 63);
+  stroke(237, 50, 75, 90);
+  fill(145, 31, 63, 90);
   translate(this.cord.x, this.cord.y);
   // image(images.tractor);
   const w = CONF.WIDTH / CONF.WORLD.WIDTH / 3;
-  rect(w, w, w, w);
+  rect(w, w+w/2, w, w);
+  noStroke();
+  fill(237, 50, 75);
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  text("T", w*1.5, w*2);
   pop();
 };

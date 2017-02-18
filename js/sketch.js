@@ -41,34 +41,33 @@ function setup() {
   // menu.add(new Button("Win", function() {console.log("WIN!");}));
   menu2 = new Panel("Side Menu", "actions");
   menu2.add(new Image("img/tractor.jpg", function() {
-    mode = MODE.TRACTOR_TEST;
+    // mode = MODE.TRACTOR_TEST;
     console.log("Du vil ha Traktor?!");
   }));
   menu2.add(new Image("img/harvest.png", function() {
-    mode = MODE.HARVEST;
+    // mode = MODE.HARVEST;
     console.log("Du vil ha Harveste?!");
   }));
   menu2.add(new Image("img/corn.png", function() {
-    mode = MODE.PLANT;
+    // mode = MODE.PLANT;
     plantPick = PLANTS.CORN;
     console.log("Du vil ha corn?!");
   }));
   menu2.add(new Image("img/wheat.png", function() {
-    mode = MODE.PLANT;
+    // mode = MODE.PLANT;
     plantPick = PLANTS.WHEAT;
     console.log("Du vil ha wheat?!");
   }));
   menu2.add(new Image("img/rhye.png", function() {
-    mode = MODE.PLANT;
+    // mode = MODE.PLANT;
     plantPick = PLANTS.RHYE;
     console.log("Du vil ha rhye?!");
   }));
   menu2.add(new Image("img/melon.png", function() {
-    mode = MODE.PLANT;
+    // mode = MODE.PLANT;
     plantPick = PLANTS.MELON;
     console.log("Du vil ha melon?!");
   }));
-  mode = MODE.PLANT;
   menu2.add(new Image("img/barn.png", function() {
     console.log(barn);
   }));
@@ -85,7 +84,7 @@ function setup() {
       tiles[x][y] = new Tile(createVector(x, y));
     }
   }
-
+  tiles[1][1].type = TILES.ROCK;
   tractor = new Tractor();
 }
 
@@ -138,22 +137,22 @@ function mouseClicked() {
         y = Math.floor(mouseY / h),
         tile = tiles[x][y];
 
-    if (mode == MODE.HARVEST && tile.stage == STAGES.MATURE){
-      console.log("WIN");
-      tile.harvest();
-      return;
-    }
+    // if (mode == MODE.HARVEST && tile.stage == STAGES.MATURE){
+    //   console.log("WIN");
+    //   tile.harvest();
+    //   return;
+    // }
 
-    if (mode == MODE.PLANT && tile.type == TILE_TYPES.PLOWED){
-          tile.plant(plantPick);
-    }
-    if (mode == MODE.PLOW && tile.type == TILE_TYPES.DIRT){
-        tile.plow();
-    }
+    // if (mode == MODE.PLANT && tile.type == TILES.PLOWED){
+    //       tile.plant(plantPick);
+    // }
+    // if (mode == MODE.PLOW && tile.type == TILES.DIRT){
+    //     tile.plow();
+    // }
 
-    if (mode == MODE.TRACTOR_TEST) {
-      tractor.enqueue(createVector(x, y));
-    }
+    // if (mode == MODE.TRACTOR_TEST) {
+    tractor.enqueue(createVector(x, y));
+    // }
 
   }
 }
