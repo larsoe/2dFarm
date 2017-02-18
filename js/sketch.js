@@ -7,18 +7,10 @@ const CONF = {
           SPEED: 90
         }
       }
-      MODE = {
-        PLOW: 1,
-        PLANT: 2,
-        HARVEST: 3,
-
-        TRACTOR_TEST: 99
-      }
 ;
 
 
-let state = "PLAY", menu, menu2, tiles, inspector, plantPick = 1, barn={}, tractor,
-  mode = MODE.TRACTOR_TEST
+let state = "PLAY", menu, tiles, inspector, plantPick = 1, barn={}, tractor,
   images = {}
 ;
 
@@ -35,42 +27,21 @@ function setup() {
   frameRate(60);
   lastFrame = millis();
 
-  inspector = createDiv(" ").id("inspector");
-  // menu = new Menu("Main Menu", createVector(50, 50), 400, 300);
-  // menu.add(new Item('<div style="width: 100%; height: 150px; background: blue;margin-bottom: 1em;"> </div>'));
-  // menu.add(new Button("Win", function() {console.log("WIN!");}));
-  menu2 = new Panel("Side Menu", "actions");
-  menu2.add(new Image("img/tractor.jpg", function() {
-    // mode = MODE.TRACTOR_TEST;
-    console.log("Du vil ha Traktor?!");
-  }));
-  menu2.add(new Image("img/harvest.png", function() {
-    // mode = MODE.HARVEST;
-    console.log("Du vil ha Harveste?!");
-  }));
-  menu2.add(new Image("img/corn.png", function() {
-    // mode = MODE.PLANT;
+  menu = new Panel("Select Plant", "actions", "panel");
+  menu.add(new Image("img/corn.png", function() {
     plantPick = PLANTS.CORN;
-    console.log("Du vil ha corn?!");
   }));
-  menu2.add(new Image("img/wheat.png", function() {
-    // mode = MODE.PLANT;
+  menu.add(new Image("img/wheat.png", function() {
     plantPick = PLANTS.WHEAT;
-    console.log("Du vil ha wheat?!");
   }));
-  menu2.add(new Image("img/rhye.png", function() {
-    // mode = MODE.PLANT;
+  menu.add(new Image("img/rhye.png", function() {
     plantPick = PLANTS.RHYE;
-    console.log("Du vil ha rhye?!");
   }));
-  menu2.add(new Image("img/melon.png", function() {
-    // mode = MODE.PLANT;
+  menu.add(new Image("img/melon.png", function() {
     plantPick = PLANTS.MELON;
-    console.log("Du vil ha melon?!");
   }));
-  menu2.add(new Image("img/barn.png", function() {
-    console.log(barn);
-  }));
+  barn_panel = createDiv(" ").id("barn").class("panel");
+  inspector = createDiv(" ").id("inspector").class("panel");
 
   barn[PLANTS.CORN]=0;
   barn[PLANTS.WHEAT]=0;
@@ -116,6 +87,9 @@ function draw() {
   } else {
     console.error("UNKNOWN STATE: " + state);
   }
+
+  barn_panel.html("Wheat: " + barn[PLANTS.WHEAT] + "  Rhye: " + barn[PLANTS.RHYE]
+     + "  Melon: " + barn[PLANTS.MELON] + "  Corn: " + barn[PLANTS.CORN]);
 }
 
 function mouseMoved() {
@@ -137,23 +111,7 @@ function mouseClicked() {
         y = Math.floor(mouseY / h),
         tile = tiles[x][y];
 
-    // if (mode == MODE.HARVEST && tile.stage == STAGES.MATURE){
-    //   console.log("WIN");
-    //   tile.harvest();
-    //   return;
-    // }
-
-    // if (mode == MODE.PLANT && tile.type == TILES.PLOWED){
-    //       tile.plant(plantPick);
-    // }
-    // if (mode == MODE.PLOW && tile.type == TILES.DIRT){
-    //     tile.plow();
-    // }
-
-    // if (mode == MODE.TRACTOR_TEST) {
     tractor.enqueue(createVector(x, y));
-    // }
-
   }
 }
 
@@ -161,7 +119,7 @@ function keyPressed() {
   if (state == "PLAY" || state == "READY") {
     if (keyCode === UP_ARROW) {
       menu.show();
-      menu2.show();
+      menu.show();
     } else if (keyCode === DOWN_ARROW) {
     } else if (keyCode === LEFT_ARROW) {
     } else if (keyCode === RIGHT_ARROW) {

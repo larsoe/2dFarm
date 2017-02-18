@@ -8,7 +8,11 @@ body {
     border: 1px solid #555;
 }
 .panel {
-    background: rgba(200, 200, 200, 50);
+    background: #DDD;
+    color: #333;
+    font-size: 20px;
+    margin: 6px;
+    padding: 4px 2em;
 }
 .panel .header {
     font-style: 20px;
@@ -33,19 +37,8 @@ body {
     width: auto;
 }
 #inspector {
-    background: #DDD;
-    color: #333;
-    font-size: 20px;
-    margin: 6px;
-    padding: 4px 2em;
-    height: 30px;
 }
 #actions {
-    background: #DDD;
-    color: #333;
-    font-size: 20px;
-    margin: 6px;
-    padding: 4px 2em;
     height: 40px;
 }
 #actions img{
