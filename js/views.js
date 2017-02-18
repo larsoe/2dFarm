@@ -11,6 +11,7 @@ var
                 tiles[x][y].render();
             }
         }
+        tractor.render();
         this.music();
       },
 
