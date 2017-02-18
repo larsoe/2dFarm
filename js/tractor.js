@@ -3,7 +3,17 @@ function Tractor() {
   this.target = createVector(3, 3);
   const w = CONF.WIDTH / CONF.WORLD.WIDTH;
   this.cord = createVector(this.pos.x * w, this.pos.y * w);
+  this.queue = [];
 }
+
+Tractor.prototype.enqueue = function(target) {
+  if (target == this.pos) return;
+  if (this.target == this.pos) {
+    this.target = target;
+  } else {
+    this.queue.push(target);
+  }
+};
 
 Tractor.prototype.tick = function() {
   const w = CONF.WIDTH / CONF.WORLD.WIDTH;
@@ -16,6 +26,9 @@ Tractor.prototype.tick = function() {
       tile.plow();
     }
 
+    if (this.queue.length > 0) {
+      this.target = this.queue.shift();
+    }
   } else {
     // If tractor is not currently at it's desired spot, move a little
     let target_cord = createVector(this.target.x * w, this.target.y * w);

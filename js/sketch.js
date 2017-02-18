@@ -152,7 +152,7 @@ function mouseClicked() {
     }
 
     if (mode == MODE.TRACTOR_TEST) {
-      tractor.target = createVector(x, y);
+      tractor.enqueue(createVector(x, y));
     }
 
   }
